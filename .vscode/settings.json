@@ -1,0 +1,9 @@
+{
+	"python-envs.pythonProjects": [],
+	"files.exclude": {
+		"**/__pycache__/": true
+	},
+	"search.exclude": {
+		"**/__pycache__/": true
+	}
+}
