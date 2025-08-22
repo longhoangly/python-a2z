@@ -1,3 +1,5 @@
-playwright
 pytest
 requests
+allure-pytest
+playwright
+pytest-playwright

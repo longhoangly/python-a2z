@@ -1,7 +1,11 @@
 import requests
+import allure
 import json
 
 
+@allure.feature("API Tests")
+@allure.story("[Script] create and get user details")
+@allure.severity(allure.severity_level.CRITICAL)
 def test_create_user_flow(api_base_url):
     # Step 1: create a user
     create_response = requests.post(

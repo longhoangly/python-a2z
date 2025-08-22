@@ -11,14 +11,13 @@ __pycache__/
 # Virtual Environment
 .venv/
 
-# Testing/Build
+# Build
 .pytest_cache
-__pycache__/
 .cache/
 dist/
 build/
 
-# IDE/Editor
+# IDE
 *.vscode/
 *.idea/
 *.iml
@@ -28,6 +27,7 @@ build/
 *.log
 *.tmp
 *.bak
+reports/
 
 # OS Files
 .DS_Store

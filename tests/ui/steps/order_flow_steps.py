@@ -1,8 +1,10 @@
-from pages.login_page import LoginPage
-from pages.inventory_page import InventoryPage
-from pages.cart_page import CartPage
-from pages.checkout_page import CheckoutPage
-from pages.finish_page import FinishPage
+from tests.ui.pages.login_page import LoginPage
+from tests.ui.pages.inventory_page import InventoryPage
+from tests.ui.pages.cart_page import CartPage
+from tests.ui.pages.checkout_page import CheckoutPage
+from tests.ui.pages.finish_page import FinishPage
+import allure
+
 
 class OrderFlowSteps:
     def __init__(self, page):
@@ -13,6 +15,7 @@ class OrderFlowSteps:
         self.checkout_page = CheckoutPage(page)
         self.finish_page = FinishPage(page)
 
+    @allure.step("Login, shopping and checkout...")
     def complete_order(self):
         self.login_page.load()
         self.login_page.login("standard_user", "secret_sauce")
