@@ -5,7 +5,8 @@ import json
 
 @allure.feature("API Tests")
 @allure.story("[Script] create and get user details")
-@allure.severity(allure.severity_level.CRITICAL)
+@allure.severity(allure.severity_level.BLOCKER)
+@allure.title("[Script] Create Users via api {api_base_url}")
 def test_create_user_flow(api_base_url):
     # Step 1: create a user
     create_response = requests.post(
@@ -52,3 +53,11 @@ def test_create_user_flow(api_base_url):
     assert login_data["token"] != None
 
     print("✅ API test passed successfully.")
+
+
+@allure.feature("API Tests")
+@allure.story("[Script] test categories")
+@allure.severity(allure.severity_level.BLOCKER)
+@allure.title("[Script] test categories")
+def test_for_failure():
+    assert 1 == 2  # Triggers AssertionError

@@ -1,73 +1,27 @@
-FROM python:3.11-slim
+FROM mcr.microsoft.com/playwright/python:v1.54.0-jammy
 
-# --------------------------
-# 1. Install system packages
-# --------------------------
-RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    default-jre \
-    wget \
-    ca-certificates \
-    gnupg \
-    libglib2.0-0 \
-    libnss3 \
-    libgconf-2-4 \
-    libasound2 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxrandr2 \
-    libgbm1 \
-    libxshmfence1 \
-    libxss1 \
-    libxtst6 \
-    fonts-liberation \
-    xdg-utils \
-    && rm -rf /var/lib/apt/lists/*
-
-# --------------------------
-# 2. Install Allure CLI
-# --------------------------
-ENV ALLURE_VERSION=2.27.0
-RUN curl -L -o allure.zip https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.zip \
-    && unzip allure.zip -d /opt/ \
-    && mv /opt/allure-${ALLURE_VERSION} /opt/allure \
-    && ln -s /opt/allure/bin/allure /usr/bin/allure \
-    && rm allure.zip
-
-# --------------------------
-# 3. Set env variables
-# --------------------------
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Set working directory
 WORKDIR /app
 
-# --------------------------
-# 4. Install Python deps
-# --------------------------
+# Install dependencies including Java for Allure CLI
+RUN apt-get update && \
+    apt-get install -y wget unzip openjdk-11-jre-headless && \
+    rm -rf /var/lib/apt/lists/* && \
+    wget -q https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz && \
+    tar -xzf allure-2.27.0.tgz -C /opt/ && \
+    ln -s /opt/allure-2.27.0/bin/allure /usr/bin/allure && \
+    rm allure-2.27.0.tgz
+
+# Install Python dependencies
 COPY requirements.txt /app/
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# --------------------------
-# 5. Install Playwright + Browsers
-# --------------------------
-RUN pip install playwright && playwright install --with-deps
-
-# --------------------------
-# 6. Copy all project files
-# --------------------------
+# Copy project files
 COPY . /app
 
-# --------------------------
-# 7. Create report folders
-# --------------------------
-RUN mkdir -p reports/allure-results reports/allure-report
+# Default command to run tests and generate report
+COPY run-tests.sh /app/run-tests.sh
+RUN chmod +x /app/run-tests.sh
 
-# --------------------------
-# 8. Default CMD: run tests + generate report
-# --------------------------
-CMD pytest tests/ --alluredir=reports/allure-results && \
-    allure generate reports/allure-results --clean -o reports/allure-report
+# Run tests via entrypoint
+ENTRYPOINT ["/app/run-tests.sh"]
