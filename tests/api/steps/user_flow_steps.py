@@ -1,13 +1,13 @@
-from tests.api.apis.auth_api import AuthAPI
-from tests.api.apis.user_api import UserAPI
+from tests.api.services.auth_service import AuthService
+from tests.api.services.user_service import UserService
 import allure
 
 
 class UserFlowSteps:
-    def __init__(self, api_base_url):
-        self.api_base_url = api_base_url
-        self.auth = AuthAPI(self.api_base_url)
-        self.user = UserAPI(self.api_base_url)
+    def __init__(self, base_url):
+        self.base_url = base_url
+        self.auth = AuthService(self.base_url)
+        self.user = UserService(self.base_url)
 
     @allure.step("Create user {username} with password {password}")
     def create_user_get_details(self, username, password):

@@ -5,8 +5,8 @@ import json
 @allure.feature("API Tests")
 @allure.story("[Steps] create and get user details")
 @allure.severity(allure.severity_level.CRITICAL)
-def test_create_user_flow(api_base_url):
-    flow = UserFlowSteps(api_base_url)
+def test_create_user_flow(base_url):
+    flow = UserFlowSteps(base_url)
     username = "eve.holt@reqres.in"
     password = "pistol"
 

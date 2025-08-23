@@ -1,16 +1,16 @@
-import requests
+from utils.requests_client import RequestsClient
 
 
-class UserAPI:
-    def __init__(self, api_base_url):
-        self.api_base_url = api_base_url
+class UserService(RequestsClient):
+    def __init__(self, base_url):
+        self.base_url = base_url
 
     def create_user(self, email, username, password):
         headers = {"x-api-key": "reqres-free-v1"}
-        response = requests.post(
-            f"{self.api_base_url}/api/register",
+        response = self.request(
+            path="/api/register",
             headers=headers,
-            json={
+            json_data={
                 "email": email,
                 "username": username,
                 "password": password,
@@ -21,8 +21,8 @@ class UserAPI:
 
     def get_user(self, user_id):
         headers = {"x-api-key": "reqres-free-v1"}
-        response = requests.get(
-            f"{self.api_base_url}/api/users/{user_id}",
+        response = self.request(
+            path=f"/api/users/{user_id}",
             headers=headers,
         )
         response.raise_for_status()

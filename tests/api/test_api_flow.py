@@ -6,11 +6,11 @@ import json
 @allure.feature("API Tests")
 @allure.story("[Script] create and get user details")
 @allure.severity(allure.severity_level.BLOCKER)
-@allure.title("[Script] Create Users via api {api_base_url}")
-def test_create_user_flow(api_base_url):
+@allure.title("[Script] Create Users via api {base_url}")
+def test_create_user_flow(base_url):
     # Step 1: create a user
     create_response = requests.post(
-        f"{api_base_url}/api/register",
+        f"{base_url}/api/register",
         headers={"x-api-key": "reqres-free-v1"},
         json={
             "email": "eve.holt@reqres.in",
@@ -28,7 +28,7 @@ def test_create_user_flow(api_base_url):
 
     # Step 2: get created user
     get_response = requests.get(
-        f"{api_base_url}/api/users/{user_id}",
+        f"{base_url}/api/users/{user_id}",
         headers={"x-api-key": "reqres-free-v1"},
     )
     get_data = get_response.json()["data"]
@@ -42,7 +42,7 @@ def test_create_user_flow(api_base_url):
 
     # Step 3: login to get token
     login_response = requests.post(
-        f"{api_base_url}/api/login",
+        f"{base_url}/api/login",
         headers={"x-api-key": "reqres-free-v1"},
         json={"email": "eve.holt@reqres.in", "password": "pistol"},
     )

@@ -5,15 +5,15 @@ from playwright.sync_api import sync_playwright
 
 
 @pytest.fixture(scope="session")
-def api_base_url():
+def base_url():
     return "https://reqres.in"
 
 
 @pytest.fixture(scope="session")
 def browser():
-    isHeadless = os.getenv("HEADLESS", "true").lower() == "true"
+    is_headless = os.getenv("HEADLESS", "true").lower() == "true"
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=isHeadless)  # change to True in CI
+        browser = p.chromium.launch(headless=is_headless)  # change to True in CI
         yield browser
         browser.close()
 
