@@ -1,0 +1,14 @@
+services:
+  api-tests:
+    container_name: api-tests
+    image: my-test-runner:latest
+    volumes:
+      - ./:/app
+    command: tests/api true
+
+  ui-tests:
+    container_name: ui-tests
+    image: my-test-runner:latest
+    volumes:
+      - ./:/app
+    command: tests/ui true

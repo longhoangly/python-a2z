@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install dependencies including Java for Allure CLI
 RUN apt-get update && \
-    apt-get install -y wget unzip openjdk-11-jre-headless && \
+    apt-get install -y openjdk-11-jre-headless unzip wget && \
     rm -rf /var/lib/apt/lists/* && \
     wget -q https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz && \
     tar -xzf allure-2.27.0.tgz -C /opt/ && \

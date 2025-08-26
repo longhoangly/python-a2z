@@ -17,9 +17,6 @@ if [ -d reports/allure-report/history ]; then
     cp -r reports/allure-report/history reports/allure-results/history
 fi
 
-# Cleaning previous results
-rm -rf reports/allure-results/*
-
 # Run tests
 HEADLESS=$HEADLESS pytest "$TEST_FOLDER"
 

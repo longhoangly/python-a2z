@@ -3,3 +3,4 @@ requests
 allure-pytest
 playwright
 pytest-playwright
+pytest-xdist
