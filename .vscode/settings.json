@@ -1,4 +1,11 @@
 {
+	"python.testing.pytestArgs": [
+		"-s", // show print/stdout
+		"-rA", // show extra test report info
+		"tests" // your tests folder (change if needed)
+	],
+	"python.testing.unittestEnabled": false,
+	"python.testing.pytestEnabled": true,
 	"python-envs.pythonProjects": [],
 	"files.exclude": {
 		"**/__pycache__/": true

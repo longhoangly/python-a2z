@@ -60,5 +60,17 @@ def get_lowest_code_rests(max_rating_rests):
 
 
 # get_list_of_restaurants()   # only run one time
-max_rating_rests = get_highest_rating_rests("./restaurants.json", "bangalore", 400)
-get_lowest_code_rests(max_rating_rests)
+city = "bangalore"
+budget = 1000
+max_rating_rests = get_highest_rating_rests("scripts/restaurants.json", city, budget)
+found_restaurants = get_lowest_code_rests(max_rating_rests)
+print(f'lowest costs restaurants within the city {city} and budget {budget} {found_restaurants}')
+
+
+
+'''
+space for improvements
+- return list of restaurant instead of single restaurant!!
+- we ignore the vote count -- this value should take in to account when calculate rating!! e.g. 1 vote 5.0 compare with 100 votes 4.9
+- find max --> then filter restaurants by max --> 2 loops (O2n)!! can reduce to 1 loop only(On)!!
+'''

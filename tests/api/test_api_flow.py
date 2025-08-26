@@ -1,6 +1,8 @@
 import requests
 import allure
 import json
+import threading
+import time
 
 
 @allure.feature("API Tests")
