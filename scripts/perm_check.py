@@ -25,8 +25,8 @@ def permutation(A):
     # return 1
 
     n = len(A)
-    setA = set(A)
-    if len(A) == len(setA) and max(setA) == n and min(setA) == 1:
+    set_a = set(A)
+    if len(A) == len(set_a) and max(set_a) == n and min(set_a) == 1:
         return 1
     else:
         return 0

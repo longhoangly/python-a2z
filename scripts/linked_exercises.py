@@ -7,27 +7,27 @@
 """
 
 
-def sum_all_numbers_in_string(str):
+def sum_all_numbers_in_string(input_str):
     import re
 
-    pattern = re.compile("[0-9]+")
-    numbers = pattern.findall(str)
+    pattern = re.compile(r"\d+")
+    numbers = pattern.findall(input_str)
     sumary = sum([int(val) for val in numbers])
     print(sumary)
 
 
-def remove_all_numbers_in_string(str):
+def remove_all_numbers_in_string(input_str):
     import re
 
-    pattern = re.compile("[0-9]+")
-    numbers = pattern.findall(str)
+    pattern = re.compile(r"\d+")
+    numbers = pattern.findall(input_str)
     for num in numbers:
-        str = str.replace(num, "")
-    print(str)
+        input_str = input_str.replace(num, "")
+    print(input_str)
 
 
-def reversed_keep_space_position(str):
-    chars = list(str)
+def reversed_keep_space_position(input_str):
+    chars = list(input_str)
     print(chars)
 
     space_indexs = []
@@ -50,10 +50,10 @@ def reversed_keep_space_position(str):
 
 
 if __name__ == "__main__":
-    # sum_all_numbers_in_string("abc12xyz34poq567")
-    # sum_all_numbers_in_string("ab&%(%)^_++_"":c12xyz34poq567")
+    sum_all_numbers_in_string("abc12xyz34poq567")
+    sum_all_numbers_in_string("ab&%(%)^_++_\"\":c12xyz34poq567")
 
-    # remove_all_numbers_in_string("abc12xyz34poq567")
-    # remove_all_numbers_in_string("ab&%(%)^_++_" ":c12xyz34poq567")
+    remove_all_numbers_in_string("abc12xyz34poq567")
+    remove_all_numbers_in_string("ab&%(%)^_++_\"\":c12xyz34poq567")
 
     reversed_keep_space_position("My name is California")
