@@ -1,11 +1,8 @@
 #!/bin/sh
 
-# Stop on error
-# set -e
-
 # Usage: ./run-tests.sh [TEST_FOLDER] [HEADLESS]
-TEST_FOLDER="${1:-tests}"     # default = tests
-HEADLESS="${2:-false}"        # default = true (headless)
+TEST_FOLDER="${1:-tests}"      # default = tests
+HEADLESS="${2:-false}"         # default = true (headless)
 
 echo "==> Starting test run"
 echo "Test folder: $TEST_FOLDER"
@@ -19,8 +16,15 @@ if [ -d reports/allure-report/history ]; then
     cp -r reports/allure-report/history reports/allure-results/history
 fi
 
-# Run tests
-HEADLESS=$HEADLESS pytest "$TEST_FOLDER"
+# Loop each test file and run in parallel
+find $TEST_FOLDER -type f -name 'test*.py' | while read -r test_file; do
+  echo executing tests in file "$test_file"
+  docker run --rm -v "$PWD":/app my-test-runner "$test_file" true &
+done
+
+# Wait for all
+# wait
+sleep 20
 
 # Generate reports
 allure generate reports/allure-results --clean -o reports/allure-report
