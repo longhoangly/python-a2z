@@ -1,7 +1,7 @@
-from utils.requests_client import RequestsClient
+from utils.http_client import HttpClient
 
 
-class UserClient(RequestsClient):
+class UserClient(HttpClient):
     def __init__(self, base_url):
         self.base_url = base_url
 

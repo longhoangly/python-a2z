@@ -33,7 +33,7 @@ def page(browser):
     context.close()
 
 
-# Common starts before session
+# ppytest hook
 def pytest_sessionstart(session):
     # Define the target directory for allure results
     results_dir = "reports/allure-results"

@@ -3,7 +3,7 @@ import allure
 import json
 
 
-class RequestsClient:
+class HttpClient:
     def __init__(self, base_url):
         self.base_url = base_url
 
@@ -29,19 +29,17 @@ class RequestsClient:
     def _log_request(self, method, url, headers, params, json_data):
         request_info = f"➡️ REQUEST:\nMETHOD: {method}\nURL: {url}\nHEADERS: {headers}\nPARAMS: {params}\nBODY: {json.dumps(json_data, indent=2)}"
         print(request_info)
-        with allure.step("Log API Request"):
-            allure.attach(
-                request_info,
-                name="request",
-                attachment_type=allure.attachment_type.TEXT,
-            )
+        allure.attach(
+            request_info,
+            name=f"request: {url}",
+            attachment_type=allure.attachment_type.TEXT,
+        )
 
     def _log_response(self, response):
         response_info = f"⬅️ RESPONSE:\nSTATUS: {response.status_code}\nHEADERS: {dict(response.headers)}\nBODY: {response.text}"
         print(response_info)
-        with allure.step("Log API Response"):
-            allure.attach(
-                response_info,
-                name="response",
-                attachment_type=allure.attachment_type.TEXT,
-            )
+        allure.attach(
+            response_info,
+            name=f"response",
+            attachment_type=allure.attachment_type.TEXT,
+        )
