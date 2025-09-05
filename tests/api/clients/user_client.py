@@ -1,7 +1,7 @@
 from utils.requests_client import RequestsClient
 
 
-class UserService(RequestsClient):
+class UserClient(RequestsClient):
     def __init__(self, base_url):
         self.base_url = base_url
 

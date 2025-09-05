@@ -1,7 +1,7 @@
 from utils.requests_client import RequestsClient
 
 
-class AuthService(RequestsClient):
+class AuthClient(RequestsClient):
     def __init__(self, base_url):
         self.base_url = base_url
 

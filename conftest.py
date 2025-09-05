@@ -2,13 +2,20 @@ import os
 import json
 import pytest
 from playwright.sync_api import sync_playwright
+from tests.api.steps.user_steps import user_steps
+from tests.ui.steps.cart_steps import cart_steps
+from tests.ui.steps.checkout_steps import checkout_steps
+from tests.ui.steps.inventory_steps import inventory_steps
+from tests.ui.steps.login_steps import login_steps
 
 
+# API fixtures
 @pytest.fixture(scope="session")
 def base_url():
     return "https://reqres.in"
 
 
+# UI fixtures
 @pytest.fixture(scope="session")
 def browser():
     is_headless = os.getenv("HEADLESS", "true").lower() == "true"
@@ -26,6 +33,7 @@ def page(browser):
     context.close()
 
 
+# Common starts before session
 def pytest_sessionstart(session):
     # Define the target directory for allure results
     results_dir = "reports/allure-results"
