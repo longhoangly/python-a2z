@@ -1,7 +1,12 @@
 import os
 import json
+from pathlib import Path
+import shutil
+import allure
 import pytest
 from playwright.sync_api import sync_playwright
+
+# import step fixtures
 from tests.api.steps.user_steps import user_steps
 from tests.ui.steps.cart_steps import cart_steps
 from tests.ui.steps.checkout_steps import checkout_steps
@@ -26,14 +31,47 @@ def browser():
 
 
 @pytest.fixture
-def page(browser):
-    context = browser.new_context()
+def page(browser, request):
+    # Each test gets a separate folder named by test name
+    test_name = request.node.name
+    video_dir = f"videos/{test_name}"
+
+    # Remove old test videos
+    if os.path.exists(video_dir):
+        shutil.rmtree(video_dir)  # Remove the entire folder
+
+    if request.config.getoption("--record-video"):
+        os.makedirs(video_dir, exist_ok=True)
+        context = browser.new_context(
+            record_video_dir=video_dir,
+            record_video_size={"width": 1280, "height": 720},
+        )
+    else:
+        context = browser.new_context()
     page = context.new_page()
+
     yield page
     context.close()
 
+    video_folder = Path(video_dir)
+    for video in video_folder.glob("*.webm"):
+        allure.attach(
+            video.read_bytes(),
+            name="test video recording",
+            attachment_type=allure.attachment_type.WEBM,
+        )
 
-# ppytest hook
+
+# pytest hooks
+def pytest_addoption(parser):
+    parser.addoption(
+        "--record-video",
+        action="store_true",
+        default=False,
+        help="Enable video recording with Playwright",
+    )
+
+
 def pytest_sessionstart(session):
     # Define the target directory for allure results
     results_dir = "reports/allure-results"

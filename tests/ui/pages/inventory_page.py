@@ -6,4 +6,4 @@ class InventoryPage:
         self.page.click(f'button[data-test="add-to-cart-{item_name}"]')
 
     def go_to_cart(self):
-        self.page.click('.shopping_cart_link')
+        self.page.click(".shopping_cart_link")
